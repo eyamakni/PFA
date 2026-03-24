@@ -1,11 +1,19 @@
+version: '3.8'
+
 services:
-  pg:
-    image: postgres
+  postgres:
+    image: postgres:15
     container_name: velora_postgres
     restart: always
     ports:
-      - 5433:5432
+      - "5433:5432"
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: velora-db
+      POSTGRES_DB: velora_postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:
