@@ -1,4 +1,4 @@
-CREATE DATABASE auth_db;
+
 CREATE DATABASE user_db;
 CREATE DATABASE admin_db;
 CREATE DATABASE customer_db;
