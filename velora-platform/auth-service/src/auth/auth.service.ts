@@ -8,11 +8,16 @@ import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
 import * as bcrypt from 'bcrypt';
 
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtService) {}
 
-  async register(email: string, password: string) {
+  async register(registerDto: RegisterDto) {
+    const { email, password } = registerDto;
+
     const hashed = await bcrypt.hash(password, 10);
 
     try {
@@ -26,16 +31,18 @@ export class AuthService {
       const token = this.jwtService.sign({ sub: response.data.id });
 
       return {
-  message: 'User created, verify email',
-  verify_token: token,
-  verify_link: `http://localhost:3002/auth/verify/${token}`,
-};
+        message: 'User created, verify email',
+        verify_token: token,
+        verify_link: `http://localhost:3002/auth/verify/${token}`,
+      };
     } catch (error) {
       throw new ConflictException('User already exists');
     }
   }
 
-  async login(email: string, password: string) {
+  async login(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+
     let user;
 
     try {
@@ -52,7 +59,9 @@ export class AuthService {
     }
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) throw new UnauthorizedException('Wrong password');
+    if (!match) {
+      throw new UnauthorizedException('Wrong password');
+    }
 
     const payload = { sub: user.id, role: user.role };
 
@@ -64,29 +73,30 @@ export class AuthService {
   async logout() {
     return { message: 'Logged out successfully' };
   }
-async requestReset(email: string) {
-  let user;
 
-  try {
-    const response = await axios.get(
-      `http://localhost:3001/users/email/${email}`,
+  async requestReset(email: string) {
+    let user;
+
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/users/email/${email}`,
+      );
+      user = response.data;
+    } catch {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const token = this.jwtService.sign(
+      { sub: user.id },
+      { expiresIn: '15m' },
     );
-    user = response.data;
-  } catch {
-    throw new UnauthorizedException('User not found');
+
+    return {
+      message: 'Reset token generated',
+      reset_token: token,
+      reset_link: `http://localhost:3002/auth/reset-password`,
+    };
   }
-
-  const token = this.jwtService.sign(
-    { sub: user.id },
-    { expiresIn: '15m' },
-  );
-
-  return {
-    message: 'Reset token generated',
-    reset_token: token,
-    reset_link: `http://localhost:3002/auth/reset-password`,
-  };
-}
 
   async resetPassword(token: string, newPassword: string) {
     let decoded;
@@ -124,6 +134,7 @@ async requestReset(email: string) {
     return { message: 'Email verified successfully' };
   }
 
+ 
   async assignRole(userId: number, role: string) {
     await axios.patch(
       `http://localhost:3001/users/${userId}`,
