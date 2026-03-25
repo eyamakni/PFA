@@ -3,6 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User, Role } from './user.entity';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+
 @Injectable()
 export class UsersService implements OnModuleInit {
   constructor(
@@ -29,28 +32,33 @@ export class UsersService implements OnModuleInit {
       console.log('Admin created');
     }
   }
-async create(
-  email: string,
-  password: string,
-  role: Role = Role.USER,
-  isVerified = false,
-) {
-  const user = this.repo.create({
-    email,
-    password,
-    role,
-    isVerified,
-  });
 
-  return this.repo.save(user);
-}
+  async create(dto: CreateUserDto) {
+    const user = this.repo.create({
+      email: dto.email,
+      password: dto.password,
+      role: dto.role ?? Role.USER,
+      isVerified: dto.isVerified ?? false,
+    });
 
-async findByEmail(email: string) {
-  return this.repo.findOne({ where: { email } });
-}
+    return this.repo.save(user);
+  }
 
-async update(id: number, data: any) {
-  await this.repo.update(id, data);
-  return { message: 'User updated' };
-}
+  async findByEmail(email: string) {
+    return this.repo.findOne({ where: { email } });
+  }
+
+  async update(id: number, dto: UpdateUserDto) {
+    if (dto.password) {
+      dto.password = await bcrypt.hash(dto.password, 10);
+    }
+
+    await this.repo.update(id, dto);
+    return { message: 'User updated' };
+  }
+
+  async delete(id: number) {
+    await this.repo.delete(id);
+    return { message: 'User deleted' };
+  }
 }
