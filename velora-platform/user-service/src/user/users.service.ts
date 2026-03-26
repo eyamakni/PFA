@@ -44,8 +44,16 @@ export class UsersService implements OnModuleInit {
     return this.repo.save(user);
   }
 
+  async findAll() {
+    return this.repo.find();
+  }
+
   async findByEmail(email: string) {
     return this.repo.findOne({ where: { email } });
+  }
+
+  async findById(id: number) {
+    return this.repo.findOne({ where: { id } });
   }
 
   async update(id: number, dto: UpdateUserDto) {

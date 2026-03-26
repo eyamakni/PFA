@@ -23,16 +23,16 @@
 
 .env : 
 
+
 # Database
 DB_HOST=localhost
 DB_PORT=5433
 DB_USER=root
 DB_PASS=root
-DB_NAME=admin_db
+DB_NAME=customer_db
 
 # App
-PORT=3003
-
+PORT=3004
 
 ## Description
 

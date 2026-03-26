@@ -20,10 +20,19 @@ export class UsersController {
 create(@Body() body: CreateUserDto) {
   return this.usersService.create(body);
 }
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
+  }
 
   @Get('email/:email')
   findByEmail(@Param('email') email: string) {
     return this.usersService.findByEmail(email);
+  }
+
+  @Get(':id')
+  findById(@Param('id') id: number) {
+    return this.usersService.findById(id);
   }
 
   @Patch(':id')
