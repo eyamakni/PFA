@@ -5,6 +5,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import LandingPage from './pages/LandingPage';
 import HotelsPage from './pages/Hotels';
+import Contact from './pages/contact';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/hotels" element={<HotelsPage />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>
   );
