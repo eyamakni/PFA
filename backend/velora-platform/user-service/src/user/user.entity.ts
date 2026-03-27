@@ -18,6 +18,11 @@ export class User {
 
   @Column({ default: false })
   isVerified: boolean;
+  @Column()
+firstName: string;
+
+@Column()
+lastName: string;
 
   @Column({
     type: 'enum',

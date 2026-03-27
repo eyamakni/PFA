@@ -37,6 +37,8 @@ export class UsersService implements OnModuleInit {
     const user = this.repo.create({
       email: dto.email,
       password: dto.password,
+       firstName: dto.firstName,
+    lastName: dto.lastName,
       role: dto.role ?? Role.USER,
       isVerified: dto.isVerified ?? false,
     });
