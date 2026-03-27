@@ -26,6 +26,8 @@ export class UsersService implements OnModuleInit {
         password: hashed,
         role: Role.ADMIN,
         isVerified: true,
+        firstName: 'Admin',
+  lastName: 'Velora',
       });
 
       await this.repo.save(newAdmin);
@@ -34,13 +36,14 @@ export class UsersService implements OnModuleInit {
   }
 
   async create(dto: CreateUserDto) {
+    console.log("DTO RECEIVED:", dto);
     const user = this.repo.create({
       email: dto.email,
       password: dto.password,
        firstName: dto.firstName,
     lastName: dto.lastName,
       role: dto.role ?? Role.USER,
-      isVerified: dto.isVerified ?? false,
+      isVerified: true,
     });
 
     return this.repo.save(user);

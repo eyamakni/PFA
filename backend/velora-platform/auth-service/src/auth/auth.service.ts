@@ -27,7 +27,7 @@ export class AuthService {
         firstName: registerDto.firstName,
   lastName: registerDto.lastName,
         role: 'USER',
-        isVerified: false,
+        isVerified: true,
       });
 
       const token = this.jwtService.sign({ sub: response.data.id });
