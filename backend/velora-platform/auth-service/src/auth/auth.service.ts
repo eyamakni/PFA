@@ -24,6 +24,8 @@ export class AuthService {
       const response = await axios.post('http://localhost:3001/users', {
         email,
         password: hashed,
+        firstName: registerDto.firstName,
+  lastName: registerDto.lastName,
         role: 'USER',
         isVerified: false,
       });
