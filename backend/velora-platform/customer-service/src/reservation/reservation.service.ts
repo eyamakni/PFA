@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Reservation, ReservationStatus } from './reservation.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -138,5 +138,12 @@ export class ReservationService {
     throw err;
   }
     return this.repo.find({ where: { hotelId } });
+  }
+  async findById(id: number): Promise<Reservation> {
+    const reservation = await this.repo.findOne({ where: { id } });
+    if (!reservation) {
+      throw new NotFoundException('Reservation not found');
+    }
+    return reservation;
   }
 }
