@@ -3,7 +3,7 @@ import "../styles/landing.css";
 export default function FeatureSection() {
     return (
 <section id="about-section" className="about-section">
-    <div className="about-header">
+    <div className="about-header-text">
         <h2>À propos de Velora Hotels</h2>
         <p>
             Nous nous engageons à offrir des expériences uniques et mémorables à chaque séjour,

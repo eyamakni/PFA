@@ -3,6 +3,7 @@ import eyaImg from "../assets/eya.jpg";
 import mayesImg from "../assets/mayes.jpg";
 import rayenneImg from "../assets/rayenne.jpg";
 import makniiImg from "../assets/maknii.jpg";
+import Navbar from "../components/Navbar";
 
 const team = [
   {
@@ -29,8 +30,9 @@ const team = [
 
 export default function Contact() {
   return (
-    <div className="contact-page">
 
+    <div className="contact-page">
+<Navbar />
       <div className="contact-header">
         <h1>Notre Équipe</h1>
         <p>Découvrez les personnes derrière Velora</p>
