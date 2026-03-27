@@ -26,7 +26,6 @@ export default function HeroSection() {
         </p>
         <div className="hero-buttons">
           <button onClick={() => navigate("/login")} className="btn-primary">Réserver maintenant</button>
-          <a href="#about-section" className="btn-secondary">En savoir plus</a>
         </div>
       </div>
 

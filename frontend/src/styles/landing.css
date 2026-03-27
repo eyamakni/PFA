@@ -53,52 +53,49 @@
 
 .hero-buttons {
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
+  justify-content: center; /* Centre le bouton horizontalement */    /* Plus d'espace pour le laisser respirer */
 }
 
 .btn-primary {
-  padding: 16px 30px;
-  border-radius: 16px;
-  font-weight: 800;
-  font-size: 1.08rem;
-  background: linear-gradient(135deg, #6366f1, #7c72ff);
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 14px 30px rgba(99, 102, 241, 0.35);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(135deg, #5458ee, #6c63ff);
-}
-
-.btn-primary:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.btn-secondary {
-  padding: 16px 30px;
-  border-radius: 16px;
-  font-weight: 600;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.12);
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
+  /* Dimensions et espacement */
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 16px 20px;    /* Plus large pour un bouton unique imposant */
+  min-width: 220px;      /* Assure une présence visuelle forte */
+  
+  /* Style visuel */
+  border-radius: 14px;   /* Arrondi légèrement plus prononcé */
+  background: linear-gradient(135deg, #6366f1, #7c72ff);
+  color: white;
+  font-size: 18px;       /* Texte un peu plus grand */
+  font-weight: 700;      /* Texte plus gras pour l'autorité */
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  
+  /* Effets et profondeur */
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.4);
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.18);
-  transform: translateY(-2px);
+/* Interactions */
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.02); /* Effet de levée plus dynamique */
+  background: linear-gradient(135deg, #5458ee, #6c63ff);
+  box-shadow: 0 18px 30px rgba(99, 102, 241, 0.5);
 }
+
+.btn-primary:active {
+  transform: translateY(-1px); /* Effet de pression au clic */
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
 
 .hero-image {
   position: relative;
@@ -214,9 +211,9 @@
   }
 
   .hero-buttons {
-    justify-content: center;
-    flex-direction: column;
-    gap: 15px;
+    display: flex;
+  gap: 15px;
+  align-items: center;
   }
 
   .about-section {
