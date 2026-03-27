@@ -24,7 +24,6 @@ body,
 #root {
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 body {
   background: url("https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1600")
