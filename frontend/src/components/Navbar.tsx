@@ -9,7 +9,7 @@ export default function Navbar() {
           Velora Hotels
         </a>
         <ul className="navbar-menu">
-          <li><a href="#about-section">À propos</a></li>
+          <li><a href="/#about-section">À propos</a></li>
           <li><Link to="/hotels">Hôtels</Link></li>
           <li><Link to="/contact">Contact</Link></li>
         </ul>
