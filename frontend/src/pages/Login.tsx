@@ -46,9 +46,11 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await login(form.email, form.password);
+     const res = await login(form.email, form.password);
 
-      localStorage.setItem("token", res.data.access_token);
+
+
+localStorage.setItem("token", res.data.data.access_token);
 
       toast.success("Connexion réussie");
 

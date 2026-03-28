@@ -1,6 +1,8 @@
 import axios from "axios";
 
-interface Hotel {
+const API = "http://localhost:3003/admin/hotels";
+
+export interface Hotel {
   id: number;
   name: string;
   address: string;
@@ -10,22 +12,41 @@ interface Hotel {
   deletedAt: string | null;
 }
 
+const authHeader = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+});
+
 export const getAllHotels = async (): Promise<Hotel[]> => {
-  try {
-    const response = await axios.get<Hotel[]>("http://localhost:3003/admin/hotels");
-    return response.data;
-  } catch (error) {
-    console.error("Erreur lors du fetch des hôtels :", error);
-    throw error;
-  }
+  const res = await axios.get<Hotel[]>(API);
+  return res.data;
 };
 
 export const getHotelById = async (id: number): Promise<Hotel> => {
-  try {
-    const response = await axios.get<Hotel>(`http://localhost:3003/admin/hotels/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Erreur lors du fetch de l'hôtel avec ID ${id} :`, error);
-    throw error;
-  }
+  const res = await axios.get<Hotel>(`${API}/${id}`);
+  return res.data;
+};
+
+export const createHotel = async (data: {
+  name: string;
+  address: string;
+  description?: string;
+}) => {
+  return axios.post(API, data, authHeader());
+};
+
+export const updateHotel = async (
+  id: number,
+  data: Partial<Hotel>
+) => {
+  return axios.put(`${API}/${id}`, data, authHeader());
+};
+
+export const deleteHotel = async (id: number) => {
+  return axios.delete(`${API}/${id}`, authHeader());
+};
+
+export const restoreHotel = async (id: number) => {
+  return axios.patch(`${API}/${id}/restore`, {}, authHeader());
 };
