@@ -4,6 +4,7 @@ import { hotelImages } from "../assets/hotels";
 import { MapPin } from "lucide-react"; // <-- Import Lucide icon
 import "../styles/HotelsPage.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 interface Hotel {
   id: number;
@@ -43,6 +44,7 @@ const HotelsPage: React.FC = () => {
 
   return (
     <div className="landing-page hotels-page">
+        <Navbar />
       <h2 className="about-header">Nos Hôtels</h2>
       <div className="hotels-list">
         {hotels.map((hotel) => (
