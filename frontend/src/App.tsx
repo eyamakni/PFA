@@ -6,6 +6,14 @@ import ResetPassword from './pages/ResetPassword';
 import LandingPage from './pages/LandingPage';
 import HotelsPage from './pages/Hotels';
 import Contact from './pages/contact';
+import UpdateHotel from './pages/admin/hotel/UpdateHotel';
+import CreateHotel  from './pages/admin/hotel/CreateHotel';
+import AdminHotels from './pages/admin/hotel/AdminHotels';
+import AdminRooms from './pages/admin/room/AdminRooms';
+import CreateRoom from './pages/admin/room/CreateRoom';
+import UpdateRoom from './pages/admin/room/UpdateRoom';
+
+
 
 function App() {
   return (
@@ -19,6 +27,12 @@ function App() {
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin/update-hotel/:id" element={<UpdateHotel />} />
+        <Route path="/admin/hotels" element={<AdminHotels />} />
+        <Route path="/admin/create-hotel" element={<CreateHotel />} />
+        <Route path="/admin/rooms" element={<AdminRooms />} />
+        <Route path="/admin/create-room" element={<CreateRoom />} />
+        <Route path="/admin/update-room/:id" element={<UpdateRoom />} />
       </Routes>
     </BrowserRouter>
   );
