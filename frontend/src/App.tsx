@@ -12,7 +12,7 @@ import UpdateHotel from './pages/admin/hotel/UpdateHotel';
 import CreateHotel from './pages/admin/hotel/CreateHotel';
 import AdminHotels from './pages/admin/hotel/AdminHotels';
 import AdminDashboard from "./pages/admin/dashboard";
-
+import Dashboard_Metrics from './pages/admin/dashboard_metrics';
 import AdminRooms from './pages/admin/room/AdminRooms';
 import CreateRoom from './pages/admin/room/CreateRoom';
 import UpdateRoom from './pages/admin/room/UpdateRoom';
@@ -47,6 +47,7 @@ function App() {
         <Route path="/admin/create-room" element={<CreateRoom />} />
         <Route path="/admin/update-room/:id" element={<UpdateRoom />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/metrics" element={<Dashboard_Metrics />} />
       </Routes>
     </BrowserRouter>
   );

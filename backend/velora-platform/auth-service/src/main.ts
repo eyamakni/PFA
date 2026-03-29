@@ -1,3 +1,5 @@
+import './otel';
+
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
@@ -12,8 +14,17 @@ app.enableCors({
 
   app.useGlobalPipes(new ValidationPipe());
 
-  app.useGlobalInterceptors(new ResponseInterceptor());
+app.useGlobalInterceptors({
+  intercept(context, next) {
+    const request = context.switchToHttp().getRequest();
 
+    if (request.url === '/metrics') {
+      return next.handle(); // skip interceptor
+    }
+
+    return new ResponseInterceptor().intercept(context, next);
+  },
+});
   await app.listen(process.env.PORT ?? 3002);
 }
 bootstrap();

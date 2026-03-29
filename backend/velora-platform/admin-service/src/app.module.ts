@@ -6,7 +6,7 @@ import { Hotel } from './hotel/hotel.entity';
 import { RoomModule } from './room/room.module';
 import { Room } from './room/room.entity';
 import { AdminModule } from './admin/admin.module';
-
+import { MetricsController } from './metrics/metrics.controller';
 @Module({
   imports: [
     // Gestion des variables d'environnement
@@ -29,5 +29,6 @@ import { AdminModule } from './admin/admin.module';
     HotelModule,
     RoomModule,
   ],
+   controllers: [MetricsController],
 })
 export class AppModule {}
