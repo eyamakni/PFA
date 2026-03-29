@@ -48,6 +48,11 @@ create(@Body() dto: CreateReservationDto, @Req() req) {
   ) {
     return this.service.findAvailableRooms(start, end);
   }
+   
+  @Get('stats')
+getStats() {
+  return this.service.getStats();
+}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('USER', 'ADMIN')
@@ -102,4 +107,5 @@ async cancel(@Param('id') id: number, @Req() req) {
 
     return reservation;
   }
+
 }

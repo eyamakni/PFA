@@ -17,7 +17,7 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
 
-  //  Easter egg
+  // Easter egg
   const [typed, setTyped] = useState("");
   const [showWelcome, setShowWelcome] = useState(false);
 
@@ -46,17 +46,23 @@ export default function Login() {
     setLoading(true);
 
     try {
-     const res = await login(form.email, form.password);
+      const res = await login(form.email, form.password);
 
+      const token = res.data.data.access_token;
+      const user = res.data.data.user;
 
-
-localStorage.setItem("token", res.data.data.access_token);
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", user.role);
 
       toast.success("Connexion réussie");
 
       setTimeout(() => {
-        navigate("/dashboard");
-      }, 1500);
+        if (user.role === "ADMIN") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/dashboard");
+        }
+      }, 1000);
 
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Erreur de connexion");
@@ -67,9 +73,12 @@ localStorage.setItem("token", res.data.data.access_token);
 
   return (
     <AuthLayout>
-
-      {/*  Titre animé + easter egg */}
-      <h2 className={`title-gradient title-animate ${showWelcome ? "welcome-animate" : ""}`}>
+      {/* Titre animé + easter egg */}
+      <h2
+        className={`title-gradient title-animate ${
+          showWelcome ? "welcome-animate" : ""
+        }`}
+      >
         {showWelcome ? "Bienvenue !" : "Bienvenue"}
       </h2>
 
@@ -78,7 +87,6 @@ localStorage.setItem("token", res.data.data.access_token);
       </p>
 
       <form onSubmit={handleSubmit}>
-
         {/* EMAIL */}
         <div className="input-group">
           <label>Email</label>
@@ -117,7 +125,6 @@ localStorage.setItem("token", res.data.data.access_token);
         <button className="btn-primary" disabled={loading}>
           {loading ? "Connexion..." : "Se connecter"}
         </button>
-
       </form>
 
       {/* SOCIAL */}
@@ -137,7 +144,6 @@ localStorage.setItem("token", res.data.data.access_token);
       <p className="toggle-text">
         Pas encore membre ? <Link to="/register">S'inscrire</Link>
       </p>
-
     </AuthLayout>
   );
 }

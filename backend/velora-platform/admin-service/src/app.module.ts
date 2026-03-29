@@ -5,6 +5,7 @@ import { HotelModule } from './hotel/hotel.module';
 import { Hotel } from './hotel/hotel.entity';
 import { RoomModule } from './room/room.module';
 import { Room } from './room/room.entity';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { Room } from './room/room.entity';
       entities: [Hotel, Room],
       synchronize: true,
     }),
-
+    AdminModule,
     HotelModule,
     RoomModule,
   ],

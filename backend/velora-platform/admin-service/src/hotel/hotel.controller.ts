@@ -26,6 +26,11 @@ export class HotelController {
     return this.hotelService.create(dto);
   }
 
+@Get('/count')
+countHotels() {
+  return this.hotelService.countHotels();
+}
+
   @Get()
   findAll() {
     return this.hotelService.findAll();
@@ -53,4 +58,5 @@ export class HotelController {
 restore(@Param('id') id: number) {
   return this.hotelService.restore(+id);
 }
+
 }

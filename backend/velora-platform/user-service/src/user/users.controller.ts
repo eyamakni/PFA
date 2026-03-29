@@ -38,6 +38,11 @@ export class UsersController {
   findByEmail(@Param('email') email: string) {
     return this.usersService.findByEmail(email);
   }
+  
+  @Get('/count')
+countUsers() {
+  return this.usersService.countUsers();
+}
 
   @Get(':id')
   findOne(@Param('id') id: number) {
@@ -54,4 +59,5 @@ export class UsersController {
   delete(@Param('id') id: number) {
     return this.usersService.delete(id);
   }
+
 }

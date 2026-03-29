@@ -74,4 +74,7 @@ export class UsersService implements OnModuleInit {
     await this.repo.delete(id);
     return { message: 'User deleted' };
   }
+  async countUsers() {
+  return this.repo.count();
+}
 }
