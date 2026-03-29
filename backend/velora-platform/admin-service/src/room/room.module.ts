@@ -11,5 +11,6 @@ import { JwtStrategy } from 'src/guards/jwt.strategy';
   imports: [TypeOrmModule.forFeature([Room, Hotel]), PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [RoomController],
   providers: [RoomService, JwtStrategy],
+  exports: [RoomService],
 })
 export class RoomModule {}

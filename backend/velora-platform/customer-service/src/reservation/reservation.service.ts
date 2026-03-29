@@ -146,4 +146,21 @@ export class ReservationService {
     }
     return reservation;
   }
+  async getStats() {
+  const total = await this.repo.count();
+
+  const confirmed = await this.repo.count({
+    where: { status: ReservationStatus.CONFIRMED },
+  });
+
+  const cancelled = await this.repo.count({
+    where: { status: ReservationStatus.CANCELLED },
+  });
+
+  return {
+    total,
+    confirmed,
+    cancelled,
+  };
+}
 }

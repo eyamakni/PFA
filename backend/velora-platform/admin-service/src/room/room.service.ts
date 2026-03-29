@@ -61,4 +61,7 @@ export class RoomService {
     const room = await this.findOne(id);
     return this.roomRepository.softRemove(room);
   }
+  async countRooms() {
+  return this.roomRepository.count();
+}
 }

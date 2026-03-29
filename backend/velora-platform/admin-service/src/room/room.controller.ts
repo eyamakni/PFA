@@ -24,6 +24,11 @@ export class RoomController {
   create(@Body() createRoomDto: CreateRoomDto) {
     return this.roomService.create(createRoomDto);
   }
+  
+  @Get('/count')
+countRooms() {
+  return this.roomService.countRooms();
+}
 
   @Get()
   findAll() {
@@ -54,4 +59,5 @@ export class RoomController {
   remove(@Param('id') id: string) {
     return this.roomService.remove(+id);
   }
+
 }

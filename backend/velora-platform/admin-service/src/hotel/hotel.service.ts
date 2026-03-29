@@ -46,4 +46,7 @@ async findAll() {
 
   return { message: 'Hotel restored successfully' };
 }
+async countHotels() {
+  return this.hotelRepo.count();
+}
 }

@@ -11,6 +11,7 @@ import Contact from './pages/contact';
 import UpdateHotel from './pages/admin/hotel/UpdateHotel';
 import CreateHotel from './pages/admin/hotel/CreateHotel';
 import AdminHotels from './pages/admin/hotel/AdminHotels';
+import AdminDashboard from "./pages/admin/dashboard";
 
 import AdminRooms from './pages/admin/room/AdminRooms';
 import CreateRoom from './pages/admin/room/CreateRoom';
@@ -45,7 +46,7 @@ function App() {
         <Route path="/admin/rooms" element={<AdminRooms />} />
         <Route path="/admin/create-room" element={<CreateRoom />} />
         <Route path="/admin/update-room/:id" element={<UpdateRoom />} />
-
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   );

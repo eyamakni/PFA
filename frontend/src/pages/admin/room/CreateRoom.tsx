@@ -71,7 +71,7 @@ const customStyles = {
     ...customStyles,
     container: (base) => ({
       ...base,
-      width: "100%", // 🔥 LA SOLUTION
+      width: "100%",
     }),
   }}
   options={[
