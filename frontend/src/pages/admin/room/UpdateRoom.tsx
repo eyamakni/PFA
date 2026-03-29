@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getRoomById,updateRoom } from "../../../api/room.api";
+import { getRoomById, updateRoom } from "../../../api/room.api";
 import toast from "react-hot-toast";
 
 export default function UpdateRoom() {
@@ -9,7 +9,7 @@ export default function UpdateRoom() {
 
   const [form, setForm] = useState({
     roomNumber: "",
-    hotelId: "",
+    hotelId: "",  // on garde pour envoyer au backend, mais pas affiché
     type: "SINGLE",
     capacity: "",
     price: "",
@@ -19,17 +19,15 @@ export default function UpdateRoom() {
     const fetchRoom = async () => {
       try {
         const res = await getRoomById(Number(id));
-
         const room = res.data;
 
         setForm({
           roomNumber: room.roomNumber,
-          hotelId: room.hotelId,
+          hotelId: room.hotelId, // récupéré mais pas modifiable
           type: room.type,
           capacity: room.capacity,
           price: room.price,
         });
-
       } catch {
         toast.error("Erreur chargement");
       }
@@ -38,22 +36,20 @@ export default function UpdateRoom() {
     fetchRoom();
   }, [id]);
 
-  // 🔥 submit update
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     try {
       await updateRoom(Number(id), {
-        ...form,
-        hotelId: Number(form.hotelId),
+        roomNumber: form.roomNumber,
+        hotelId: Number(form.hotelId), // envoyé au backend
+        type: form.type,
         capacity: Number(form.capacity),
         price: Number(form.price),
       });
 
       toast.success("Chambre mise à jour");
-
-      navigate("/admin/rooms");
-
+      navigate(-1); // ou navigate(-1) pour revenir à la page précédente
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Erreur update");
     }
@@ -74,13 +70,7 @@ export default function UpdateRoom() {
           }
         />
 
-        <input
-          placeholder="Hotel ID"
-          value={form.hotelId}
-          onChange={(e) =>
-            setForm({ ...form, hotelId: e.target.value })
-          }
-        />
+        {/* Champ hotelId retiré du formulaire */}
 
         <select
           value={form.type}
