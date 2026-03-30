@@ -123,10 +123,20 @@ export default function AvailableRooms() {
             </div>
 
             <div className="hotel-actions-icons">
-              <button className="btn-secondary" onClick={() => handleReserveClick(room)}>
-                Réserver
-              </button>
-            </div>
+  <button
+    className="btn-secondary"
+    onClick={() => {
+      const token = localStorage.getItem("token"); // ou check user
+      if (!token) {
+        navigate("/login"); // redirige vers la page login
+      } else {
+        handleReserveClick(room); // si connecté, continue
+      }
+    }}
+  >
+    Réserver
+  </button>
+</div>
           </div>
         ))}
       </div>
