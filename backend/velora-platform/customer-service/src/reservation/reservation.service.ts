@@ -146,6 +146,17 @@ export class ReservationService {
     }
     return reservation;
   }
+
+  async findByRoom(roomId: number) {
+    try {    const roomsResponse = await axios.get(`${this.ROOM_SERVICE_URL}/${roomId}`);
+    } catch (err) {
+    if (axios.isAxiosError(err) && err.response?.status === 404) {
+      throw new BadRequestException('Room does not exist');
+    } throw err;
+  } 
+    return this.repo.find({ where: { roomId } });
+  }
+  
   async getStats() {
   const total = await this.repo.count();
 

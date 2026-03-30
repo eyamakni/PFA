@@ -5,7 +5,7 @@ import {
 } from "../../../api/hotel.api";
 import "../../../styles/AdminHotels.css";
 import { hotelImages } from "../../../assets/hotels";
-import { Eye, MapPin, Pencil, Trash2, ArrowLeft } from "lucide-react";
+import { MapPin, Pencil, Trash2, ArrowLeft, CalendarCheck, DoorOpen } from "lucide-react";
 
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -87,15 +87,24 @@ export default function AdminHotels() {
             </div>
 
             <div className="hotel-actions-icons">
-              <button 
-                className="btn-icon btn-secondary" 
-                onClick={() => navigate(`/admin/hotels/${hotel.id}`)}
+              {/* Voir chambres */}
+              <button
+                className="btn-icon btn-primary-icon"
+                onClick={() => navigate(`/admin/hotels/${hotel.id}/rooms`)}
               >
-                <Eye size={18} />
+                <DoorOpen size={18} />
+              </button>
+
+              {/* Voir réservations */}
+              <button
+                className="btn-icon btn-primary-icon"
+                onClick={() => navigate(`/admin/hotels/${hotel.id}/reservations`)}
+              >
+                <CalendarCheck size={18} />
               </button>
               
               <button 
-                className="btn-icon btn-primary-icon" 
+                className="btn-icon btn-secondary" 
                 onClick={() => navigate(`/admin/update-hotel/${hotel.id}`)}
               >
                 <Pencil size={18} />

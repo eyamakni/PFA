@@ -61,6 +61,9 @@ export default function AdminDashboard() {
         <div className="sidebar-links">
           <button onClick={() => navigate("/admin/dashboard")}>Dashboard</button>
           <button onClick={() => navigate("/admin/hotels")}>Hôtels</button>
+          <button onClick={() => navigate("/admin/users")}>Utilisateurs</button>
+          <button onClick={() => navigate("/admin/metrics")}>Métriques</button>
+          <button onClick={() => navigate("/admin/profile")}>Mon Profil</button>
         </div>
       </div>
 

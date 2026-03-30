@@ -57,6 +57,20 @@ export const getMe = async () => {
   }
 };
 
+export const getAllUsers = async () => {
+  try {
+    const response = await axios.get(API_URL_USERS, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    console.error("Erreur lors de la récupération des utilisateurs :", error);
+    throw error;
+  }
+};
+
 
 export const updateUser = async (userData: {
   firstName: string;

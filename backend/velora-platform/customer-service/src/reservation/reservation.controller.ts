@@ -73,6 +73,13 @@ async findByUser(@Param('userId') userId: number, @Req() req) {
     return this.service.findByHotel(hotelId);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('USER', 'ADMIN')
+  @Get('room/:roomId')
+  findbyRoom(@Param('roomId') roomId: number) {
+    return this.service.findByRoom(roomId);
+  }
+
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('USER', 'ADMIN')
 @Patch(':id/cancel')

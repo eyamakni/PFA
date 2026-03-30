@@ -1,4 +1,3 @@
-// src/api/room.api.ts
 import axios from "axios";
 
 const API_URL_RESERVATIONS = "http://localhost:3004/reservations";
@@ -38,7 +37,36 @@ export const getReservationsByUser = async (userId: number) => {
     throw error;
   }
 };
+export const getReservationsByRoom = async (roomId: number) => {
+    try { 
+        const response = await axios.get(`${API_URL_RESERVATIONS}/room/${roomId}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        return response.data; // renvoie un tableau de réservations
+    } catch (error) {
+        console.error("Erreur lors de la récupération des réservations :", error);
+        throw error;
+    }   
+};
 
+// 🔹 Récupérer toutes les réservations d'un hôtel
+export const getReservationsByHotel = async (hotelId: number) => {
+  try {
+    const response = await axios.get(`${API_URL_RESERVATIONS}/hotel/${hotelId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    return response.data; // renvoie un tableau de réservations
+  } catch (error) {
+    console.error("Erreur lors de la récupération des réservations de l'hôtel :", error);
+    throw error;
+  }
+};
+
+// 🔹 Annuler une réservation
 export const cancelReservation = async (reservationId: number) => {
   try {
     const res = await axios.patch(`${API_URL_RESERVATIONS}/${reservationId}/cancel`, null, {

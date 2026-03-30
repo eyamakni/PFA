@@ -50,7 +50,7 @@ export class UsersService implements OnModuleInit {
   }
 
   async findAll() {
-    return this.repo.find();
+    return this.repo.find({where: { role: Role.USER }});
   }
 
   async findByEmail(email: string) {

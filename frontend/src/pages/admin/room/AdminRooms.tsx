@@ -9,11 +9,11 @@ import {
   Bed,
   Users,
   DollarSign,
-  Eye,
   Pencil,
   Trash2,
   Plus,
-  ArrowLeft
+  ArrowLeft,
+  CalendarCheck
 } from "lucide-react";
 
 import toast from "react-hot-toast";
@@ -120,18 +120,42 @@ export default function AdminHotelDetails() {
                 <DollarSign className="icon" />
                 {room.price} TND
               </div>
-            </div>
+              {room.description && (
+    <p className="room-description" style={{ marginTop: "8px", color: "white" }}>
+      {room.description}
+    </p>
+  )}
+            {room.features && room.features.length > 0 && (
+  <div className="room-features" style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "6px" }}>
+    {room.features.map((feature: string) => (
+      <span
+        key={feature}
+        style={{
+          background: "rgba(255,255,255,0.12)",
+          padding: "4px 10px",
+          borderRadius: "12px",
+          fontSize: "0.85rem",
+          color: "white"
+        }}
+      >
+        {feature}
+      </span>
+    ))}
+  </div>
+            )}
+          </div>
+            
 
             <div className="hotel-actions-icons">
               <button 
-                className="btn-icon btn-secondary" 
+                className="btn-icon btn-primary-icon" 
                 onClick={() => navigate(`/admin/hotels/${hotel.id}/rooms/${room.id}`)}
               >
-                <Eye size={18} />
+                <CalendarCheck size={18} />
               </button>
               
               <button 
-                className="btn-icon btn-primary-icon" 
+                className="btn-icon btn-secondary" 
                 onClick={() => navigate(`/admin/hotels/${hotel.id}/update-room/${room.id}`)}
               >
                 <Pencil size={18} />
