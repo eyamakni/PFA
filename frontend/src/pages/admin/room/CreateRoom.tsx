@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createRoom } from "../../../api/room.api";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -8,12 +8,37 @@ export default function CreateRoom() {
   const navigate = useNavigate();
   const { id: hotelIdParam } = useParams(); // récupère l'id de l'URL
 
-  const [form, setForm] = useState({
-    roomNumber: "",
-    type: "SINGLE",
-    capacity: "",
-    price: "",
-  });
+const [form, setForm] = useState({
+  roomNumber: "",
+  type: "SINGLE",
+  capacity: "",
+  price: "",
+  description: "",
+  features: [] as string[],
+});
+
+  const featuresList = [
+  "WiFi",
+  "Climatisation",
+  "TV",
+  "Mini Bar",
+  "Vue sur mer",
+  "Balcon",
+];
+
+const handleFeatureChange = (feature: string) => {
+  if (form.features.includes(feature)) {
+    setForm({
+      ...form,
+      features: form.features.filter((f) => f !== feature),
+    });
+  } else {
+    setForm({
+      ...form,
+      features: [...form.features, feature],
+    });
+  }
+};
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -95,6 +120,34 @@ export default function CreateRoom() {
           placeholder="Prix"
           onChange={(e) => setForm({ ...form, price: e.target.value })}
         />
+        {/* Description */}
+<input
+  placeholder="Description"
+  value={form.description}
+  onChange={(e) => setForm({ ...form, description: e.target.value })}
+/>
+
+<div className="features-group">
+  <label>Features :</label>
+
+  <div className="features-list">
+    {featuresList.map((feature) => (
+      <label
+        key={feature}
+        className={`feature-item ${
+          form.features.includes(feature) ? "active" : ""
+        }`}
+      >
+        <input
+          type="checkbox"
+          checked={form.features.includes(feature)}
+          onChange={() => handleFeatureChange(feature)}
+        />
+        {feature}
+      </label>
+    ))}
+  </div>
+</div>
 
         <button className="btn-primary">Créer</button>
       </form>
