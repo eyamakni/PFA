@@ -60,7 +60,7 @@ export default function Login() {
         if (user.role === "ADMIN") {
           navigate("/admin/dashboard");
         } else {
-          navigate("/dashboard");
+          navigate("/");
         }
       }, 1000);
 

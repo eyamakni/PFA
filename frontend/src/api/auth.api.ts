@@ -27,3 +27,10 @@ export const requestReset = (email: string) => {
 export const resetPassword = (token: string, password: string) => {
   return axios.post(`${API}/reset-password`, { token, password });
 };
+
+export const isLoggedIn = () => {
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+
+  return !!token && role === "USER";
+};
