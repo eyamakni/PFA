@@ -59,8 +59,7 @@ const HotelsPage: React.FC = () => {
               <p className="hotel-description">{hotel.description}</p>
             </div>
             <div className="hotel-buttons">
-              <button onClick={() => navigate(`/login`)} className="btn-primary">Réserver</button>
-              <button onClick={() => navigate(`/hotels/${hotel.id}`)} className="btn-secondary">Voir plus</button>
+              <button onClick={() => navigate(`/hotels/${hotel.id}`)} className="btn-secondary">Voir nos offres</button>
             </div>
           </div>
         ))}

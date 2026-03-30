@@ -22,6 +22,8 @@ import UpdateRoom from './pages/admin/room/UpdateRoom';
 // PUBLIC
 import HotelDetails from './pages/HotelsDetails';
 import AdminHotelDetails from './pages/admin/room/AdminRooms';
+import AvailableRooms from './pages/availableRooms';
+import UserReservations from './pages/reservations';
 
 function App() {
   return (
@@ -37,8 +39,9 @@ function App() {
 
         <Route path="/hotels" element={<HotelsPage />} />
         <Route path="/hotels/:id" element={<HotelDetails />} />
-
+        <Route path="/hotels/:id/available-rooms" element={<AvailableRooms />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/reservations" element={<UserReservations />} />
 
         {/* ADMIN HOTEL */}
         <Route path="/admin/hotels" element={<AdminHotels />} />

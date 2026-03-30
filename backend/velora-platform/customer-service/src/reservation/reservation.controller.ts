@@ -31,7 +31,7 @@ create(@Body() dto: CreateReservationDto, @Req() req) {
   }
   return this.service.create(dto);
 }
-  @UseGuards(JwtAuthGuard) 
+ 
   @Get('availability')
   checkAvailability(
     @Query('roomId') roomId: number,
@@ -40,13 +40,14 @@ create(@Body() dto: CreateReservationDto, @Req() req) {
   ) {
     return this.service.checkAvailability(roomId, start, end);
   }
-  @UseGuards(JwtAuthGuard)
+
   @Get('available-rooms')
   getAvailableRooms(
     @Query('start') start: string,
     @Query('end') end: string,
+    @Query('hotelId') hotelId: number,
   ) {
-    return this.service.findAvailableRooms(start, end);
+    return this.service.findAvailableRooms(start, end, hotelId);
   }
    
   @Get('stats')
