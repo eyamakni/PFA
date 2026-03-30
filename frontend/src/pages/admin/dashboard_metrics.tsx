@@ -28,10 +28,17 @@ const SERVICES = [
 export default function Dashboard_Metrics() {
   const [data, setData] = useState<any>(null);
 
+  // ✅ AJOUT ALERTS
+  const [alerts, setAlerts] = useState<any[]>([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get('http://localhost:3010/dashboard/metrics');
       setData(res.data);
+
+      // ✅ FETCH ALERTS
+      const alertsRes = await axios.get('http://localhost:3010/dashboard/alerts');
+      setAlerts(alertsRes.data);
     };
 
     fetchData();
@@ -62,7 +69,7 @@ export default function Dashboard_Metrics() {
   const cpu = format(data.cpu, (v) => Number((v * 100).toFixed(3)));
   const memory = format(data.memory, (v) => Number((v / 1024 / 1024).toFixed(2)));
 
-  //  AJOUT LAG (ms)
+  // AJOUT LAG (ms)
   const lag = format(data.lag, (v) => Number((v * 1000).toFixed(3)));
 
   return (
@@ -98,6 +105,39 @@ export default function Dashboard_Metrics() {
                     ? 'Service is reachable and responding correctly.'
                     : 'Service is unavailable or not responding.'}
                 </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ✅ SECTION ALERTS AJOUTÉE */}
+        <div className="alerts-section" style={{ marginTop: "30px" }}>
+          <h2 className="chart-title">Alerts</h2>
+
+          {alerts.length === 0 && (
+            <div style={{ color: "lightgreen" }}>
+              No active alerts ✅
+            </div>
+          )}
+
+          {alerts.map((alert, i) => {
+            const severity = alert.labels?.severity || "unknown";
+
+            return (
+              <div
+                key={i}
+                style={{
+                  border: "2px solid red",
+                  borderRadius: "10px",
+                  padding: "10px",
+                  marginBottom: "10px",
+                  background: "rgba(255,0,0,0.1)",
+                }}
+              >
+                <strong>{alert.labels?.alertname}</strong>
+                <p>Status: {alert.state}</p>
+                <p>Severity: {severity}</p>
+                <p>{alert.annotations?.description}</p>
               </div>
             );
           })}
@@ -170,7 +210,7 @@ export default function Dashboard_Metrics() {
             </div>
           </div>
 
-          {/*  AJOUT LAG */}
+          {/* AJOUT LAG */}
           <div className="chart-card">
             <div className="chart-header">
               <div>

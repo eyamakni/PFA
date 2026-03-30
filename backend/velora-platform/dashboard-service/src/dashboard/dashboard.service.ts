@@ -54,4 +54,17 @@ export class DashboardService {
       lag,
     };
   }
+  async getAlerts() {
+  try {
+    const response = await axios.get(
+      `${this.prometheusBaseUrl}/api/v1/alerts`
+    );
+
+    return response.data.data.alerts;
+  } catch (error) {
+    throw new InternalServerErrorException(
+      'Prometheus alerts fetch failed',
+    );
+  }
+}
 }
