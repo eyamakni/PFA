@@ -91,14 +91,19 @@ export default function AvailableRooms() {
         <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="input-field" />
         <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="input-field" />
         <button className="btn-primary" onClick={fetchAvailableRooms}>
-          Afficher chambres dispo
+          Afficher chambres disponibles
         </button>
       </div>
 
       {/* LISTE DES CHAMBRES */}
       {loading && <p style={{ color: "white" }}>Chargement...</p>}
-
+      {!loading && startDate && endDate && rooms.length === 0 && (
+  <p style={{ color: "white" }}>
+    Aucune chambre disponible pour les dates sélectionnées.
+  </p>
+)}
       <div className="hotels-list">
+
         {rooms.map((room) => (
           <div className="hotel-card" key={room.id}>
             <div className="hotel-info">
