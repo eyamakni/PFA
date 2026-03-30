@@ -10,8 +10,8 @@ groups:
           description: "Service {{ $labels.job }} is DOWN"
 
       - alert: HighCPUUsage
-        expr: rate(process_cpu_seconds_total[1m]) * 100 > 80
-        for: 20s
+        expr: rate(process_cpu_seconds_total[1m]) * 100 > 0.5 # a rendre 80
+        for: 0s # a rendre 20
         labels:
           severity: warning
         annotations:

@@ -33,4 +33,10 @@ export class DashboardController {
 getAlerts() {
   return this.dashboardService.getAlerts();
 }
+@Get('cpu-test')
+cpuTest() {
+  const end = Date.now() + 60000; // 60 secondes
+  while (Date.now() < end) {}
+  return "CPU stress done";
+}
 }
