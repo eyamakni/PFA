@@ -1,70 +1,146 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getHotelById } from "../api/hotel.api"; // ← ta nouvelle fonction
-import { MapPin } from "lucide-react";
-import "../styles/HotelsDetails.css";
-import { hotelImages } from "../assets/hotels";
 
-interface Hotel {
-  id: number;
-  name: string;
-  address: string;
-  description: string;
-  imageUrl?: string;
-}
+import { getHotelById } from "../api/hotel.api";
+import { getRoomsByHotel } from "../api/room.api";
 
-const HotelDetails: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+import {
+  MapPin,
+  Bed,
+  Users,
+  DollarSign,
+  ArrowLeft
+} from "lucide-react";
+
+
+export default function AdminHotelDetails() {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [hotel, setHotel] = useState<Hotel | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [image, setImage] = useState<string>(""); // ← image aléatoire
+
+  const [hotel, setHotel] = useState<any>(null);
+  const [rooms, setRooms] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchHotel = async () => {
-      if (!id) return;
-      try {
-        const data = await getHotelById(Number(id));
-        setHotel(data);
-
-        // Choisir une image aléatoire du tableau
-        const randomIndex = Math.floor(Math.random() * hotelImages.length);
-        setImage(hotelImages[randomIndex]);
-      } catch {
-        setError("Impossible de charger l'hôtel");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchHotel();
+    if (id) {
+      fetchHotel();
+      fetchRooms();
+    }
   }, [id]);
 
-  if (loading) return <p>Chargement...</p>;
-  if (error) return <p>{error}</p>;
-  if (!hotel) return null;
+  const fetchHotel = async () => {
+    const data = await getHotelById(Number(id));
+    setHotel(data);
+  };
+
+  const fetchRooms = async () => {
+    const res = await getRoomsByHotel(Number(id));
+    setRooms(res.data);
+  };
+
+  if (!hotel) return <p style={{ color: "white" }}>Chargement...</p>;
 
   return (
-    <div className="hotel-details-container">
-      <button className="hotel-details-back-btn" onClick={() => navigate(-1)}>
-        ← Retour
-      </button>
-      <h2 className="hotel-details-name">{hotel.name}</h2>
-      {image && (
-        <img src={image} alt={hotel.name} className="hotel-details-image" />
-      )}
-      <p className="hotel-details-location">
-        <MapPin size={16} className="hotel-details-location-icon" /> {hotel.address}
-      </p>
-      <p className="hotel-details-description">{hotel.description}</p>
+    <div className="landing-page hotels-page">
+
+      {/* BOUTON RETOUR */}
       <button
-        className="hotel-details-reserve-btn"
-        onClick={() => navigate(`/reservation/${hotel.id}`)}
+        className="btn-secondary"
+        style={{ marginBottom: "20px", display: "flex", alignItems: "center", gap: "8px" }}
+        onClick={() => navigate("/hotels")} // ou navigate(-1) pour revenir à la page précédente
       >
-        Réserver
+        <ArrowLeft size={18} />
+        Retour
       </button>
+
+      {/* HOTEL INFO */}
+      <h1 className="about-header">{hotel.name}</h1>
+
+      <div className="hotel-card">
+        <div className="hotel-info">
+          <p className="hotel-location">
+            <MapPin className="location-icon" />
+            {hotel.address}
+          </p>
+
+          <p className="hotel-description">
+            {hotel.description}
+          </p>
+          {/* SEE AVAILABLE ROOMS BUTTON */}
+    <button
+      className="btn-primary"
+      style={{ marginTop: "15px", width: "fit-content" }}
+      onClick={() => navigate(`/hotels/${hotel.id}/available-rooms`)}
+    >
+      Voir les chambres disponibles
+    </button>
+        </div>
+      </div>
+
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        width: "100%",
+        marginTop: "40px",
+        marginBottom: "20px" 
+      }}>
+        <h2 className="about-header" style={{ margin: 0 }}>Chambres</h2>
+
+      </div>
+
+      {/* ROOMS LIST */}
+      <div className="hotels-list">
+        {rooms.map((room) => (
+          <div className="hotel-card" key={room.id}>
+            <div className="hotel-info">
+  <h3 className="hotel-name">Chambre {room.roomNumber}</h3>
+
+  <div className="info-row">
+    <Bed className="icon" />
+    {room.type}
+
+    <Users className="icon" style={{ marginLeft: "10px" }} />
+    {room.capacity}
+  </div>
+
+  <div className="info-row">
+    <DollarSign className="icon" />
+    {room.price} TND
+  </div>
+
+  {/* DESCRIPTION */}
+  {room.description && (
+    <p className="room-description" style={{ marginTop: "8px", color: "white" }}>
+      {room.description}
+    </p>
+  )}
+
+  {/* FEATURES */}
+  {room.features && room.features.length > 0 && (
+    <div className="room-features" style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "6px" }}>
+      {room.features.map((feature: string) => (
+        <span
+          key={feature}
+          style={{
+            background: "rgba(255,255,255,0.12)",
+            padding: "4px 10px",
+            borderRadius: "12px",
+            fontSize: "0.85rem",
+            color: "white"
+          }}
+        >
+          {feature}
+        </span>
+      ))}
+    </div>
+  )}
+</div>
+
+            <div className="hotel-actions-icons">
+</div>
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
-
-export default HotelDetails;
+}

@@ -43,12 +43,19 @@ export class UsersController {
 countUsers() {
   return this.usersService.countUsers();
 }
+@UseGuards(JwtAuthGuard)
+  @Get('me')
+  async getMe(@Req() req: any) {
+    // req.user est injecté par JwtStrategy.validate
+    const userId = req.user.sub; // le "sub" du token
+    return this.usersService.findById(userId);
+  }
+
 
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.usersService.findById(id);
   }
-
   @Patch(':id')
   update(@Param('id') id: number, @Body() body: UpdateUserDto) {
     return this.usersService.update(id, body);

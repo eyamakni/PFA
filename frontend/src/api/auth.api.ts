@@ -34,3 +34,24 @@ export const isLoggedIn = () => {
 
   return !!token && role === "USER";
 };
+
+
+const API_URL_USERS = "http://localhost:3001/users"; // adapter si besoin
+
+export const getMe = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("Utilisateur non connecté");
+
+    const response = await axios.get(`${API_URL_USERS}/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data; // renvoie les infos de l'utilisateur
+  } catch (error: any) {
+    console.error("Erreur lors de la récupération de l'utilisateur :", error);
+    throw error;
+  }
+};

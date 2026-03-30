@@ -92,7 +92,7 @@ export class ReservationService {
     return overlapping === 0;
   }
 
-  async findAvailableRooms(start: string, end: string) {
+  async findAvailableRooms(start: string, end: string, hotelId: number) {
   // 1️⃣ Récupérer toutes les réservations qui se chevauchent
   const reservedRooms = await this.repo
     .createQueryBuilder('reservation')
@@ -108,7 +108,7 @@ export class ReservationService {
   const allRooms = roomsResponse.data;
 
   // 3️⃣ Filtrer les chambres disponibles
-  const availableRooms = allRooms.filter(room => !reservedIds.includes(room.id));
+  const availableRooms = allRooms.filter(room => !reservedIds.includes(Number(room.id)) && room.hotelId === hotelId);
 
   return availableRooms;
 }
