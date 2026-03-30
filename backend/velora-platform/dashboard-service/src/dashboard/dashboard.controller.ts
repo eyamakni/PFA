@@ -29,4 +29,8 @@ export class DashboardController {
   async getLag() {
     return this.dashboardService.getEventLoopLag();
   }
+  @Get('alerts')
+getAlerts() {
+  return this.dashboardService.getAlerts();
+}
 }
