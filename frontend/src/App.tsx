@@ -14,7 +14,6 @@ import AdminHotels from './pages/admin/hotel/AdminHotels';
 import AdminDashboard from "./pages/admin/dashboard";
 
 import Dashboard_Metrics from './pages/admin/dashboard_metrics';
-import AdminRooms from './pages/admin/room/AdminRooms';
 
 import CreateRoom from './pages/admin/room/CreateRoom';
 import UpdateRoom from './pages/admin/room/UpdateRoom';
@@ -24,6 +23,8 @@ import HotelDetails from './pages/HotelsDetails';
 import AdminHotelDetails from './pages/admin/room/AdminRooms';
 import AvailableRooms from './pages/availableRooms';
 import UserReservations from './pages/reservations';
+import UserProfile from './pages/profile';
+import UserEdit from './pages/profile-edit';
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
         <Route path="/hotels/:id/available-rooms" element={<AvailableRooms />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/reservations" element={<UserReservations />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/profile/edit" element={<UserEdit />} />
 
         {/* ADMIN HOTEL */}
         <Route path="/admin/hotels" element={<AdminHotels />} />

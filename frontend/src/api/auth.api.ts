@@ -36,6 +36,7 @@ export const isLoggedIn = () => {
 };
 
 
+
 const API_URL_USERS = "http://localhost:3001/users"; // adapter si besoin
 
 export const getMe = async () => {
@@ -52,6 +53,24 @@ export const getMe = async () => {
     return response.data; // renvoie les infos de l'utilisateur
   } catch (error: any) {
     console.error("Erreur lors de la récupération de l'utilisateur :", error);
+    throw error;
+  }
+};
+
+
+export const updateUser = async (userData: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password?: string;
+  id: number;
+}) => {
+  try {
+    const { id, ...body } = userData;
+    const response = await axios.patch(`${API_URL_USERS}/${id}`, body);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur updateUser:", error);
     throw error;
   }
 };
