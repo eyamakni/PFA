@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 
 export default function UserReservations() {
-  const [user, setUser] = useState<any>(null);
+  const [, setUser] = useState<any>(null);
   const [upcoming, setUpcoming] = useState<any[]>([]);
   const [archive, setArchive] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

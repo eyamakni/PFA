@@ -11,7 +11,7 @@ export default function AdminHotelReservations() {
   const { hotelId } = useParams<{ hotelId: string }>();
   const navigate = useNavigate();
   const [hotel, setHotel] = useState<any>(null);
-  const [rooms, setRooms] = useState<any[]>([]);
+  const [, setRooms] = useState<any[]>([]);
   const [upcoming, setUpcoming] = useState<any[]>([]);
   const [archive, setArchive] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
