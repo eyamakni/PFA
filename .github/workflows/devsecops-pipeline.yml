@@ -18,19 +18,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '18'
-
       - name: Build auth-service
         working-directory: backend/velora-platform/auth-service
         run: npm install --legacy-peer-deps && npm run build --if-present
-
       - name: Build user-service
         working-directory: backend/velora-platform/user-service
         run: npm install --legacy-peer-deps && npm run build --if-present
-
       - name: Build admin-service
         working-directory: backend/velora-platform/admin-service
         run: npm install --legacy-peer-deps && npm run build --if-present
-
       - name: Build customer-service
         working-directory: backend/velora-platform/customer-service
         run: npm install --legacy-peer-deps && npm run build --if-present
@@ -41,7 +37,6 @@ jobs:
     needs: build-and-test
     steps:
       - uses: actions/checkout@v4
-
       - name: Trivy vulnerability scan
         uses: aquasecurity/trivy-action@master
         with:
@@ -50,7 +45,6 @@ jobs:
           severity: 'CRITICAL,HIGH'
           format: 'table'
           exit-code: '0'
-
       - name: npm audit auth-service
         working-directory: backend/velora-platform/auth-service
         run: npm install --legacy-peer-deps && npm audit --audit-level=high || true
@@ -73,17 +67,12 @@ jobs:
     needs: build-and-test
     steps:
       - uses: actions/checkout@v4
-
+      - name: Install promtool
+        run: |
+          wget -q https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
+          tar xzf prometheus-2.45.0.linux-amd64.tar.gz
+          sudo mv prometheus-2.45.0.linux-amd64/promtool /usr/local/bin/
       - name: Validate Prometheus config
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/backend/velora-platform/monitoring/prometheus:/etc/prometheus \
-            prom/prometheus:latest \
-            promtool check config /etc/prometheus/prometheus.yml
-
+        run: promtool check config backend/velora-platform/monitoring/prometheus/prometheus.yml
       - name: Validate alert rules
-        run: |
-          docker run --rm \
-            -v ${{ github.workspace }}/backend/velora-platform/monitoring/prometheus:/etc/prometheus \
-            prom/prometheus:latest \
-            promtool check rules /etc/prometheus/alerts.yml
+        run: promtool check rules backend/velora-platform/monitoring/prometheus/alerts.yml
