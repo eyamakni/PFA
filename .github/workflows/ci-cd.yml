@@ -1,0 +1,23 @@
+name: Velora CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - pipeline
+  pull_request:
+    branches:
+      - pipeline
+
+jobs:
+  check-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Check project structure
+        run: |
+          ls
+          ls backend
+          ls frontend

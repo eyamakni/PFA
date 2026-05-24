@@ -28,7 +28,7 @@ const SERVICES = [
 export default function Dashboard_Metrics() {
   const [data, setData] = useState<any>(null);
 
-  // ✅ AJOUT ALERTS
+  //  AJOUT ALERTS
   const [alerts, setAlerts] = useState<any[]>([]);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function Dashboard_Metrics() {
       const res = await axios.get('http://localhost:3010/dashboard/metrics');
       setData(res.data);
 
-      // ✅ FETCH ALERTS
+      //  FETCH ALERTS
       const alertsRes = await axios.get('http://localhost:3010/dashboard/alerts');
       setAlerts(alertsRes.data);
     };
@@ -110,13 +110,13 @@ export default function Dashboard_Metrics() {
           })}
         </div>
 
-        {/* ✅ SECTION ALERTS AJOUTÉE */}
+        {/*  SECTION ALERTS AJOUTÉE */}
         <div className="alerts-section" style={{ marginTop: "30px" }}>
           <h2 className="chart-title">Alerts</h2>
 
           {alerts.length === 0 && (
             <div style={{ color: "lightgreen" }}>
-              No active alerts ✅
+              No active alerts 
             </div>
           )}
 
