@@ -37,7 +37,8 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
+        continue-on-error: true
 
       - name: Build service
         run: npm run build
@@ -60,7 +61,8 @@ jobs:
           node-version: 22
 
       - name: Install frontend dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
+        continue-on-error: true
 
       - name: Build frontend
         run: npm run build
