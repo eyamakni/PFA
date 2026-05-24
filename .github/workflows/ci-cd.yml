@@ -9,15 +9,56 @@ on:
       - pipeline
 
 jobs:
-  check-project:
+
+  backend-build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service:
+          - auth-service
+          - user-service
+          - admin-service
+          - customer-service
+          - dashboard-service
+
+    defaults:
+      run:
+        working-directory: backend/velora-platform/${{ matrix.service }}
 
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
 
-      - name: Check project structure
-        run: |
-          ls
-          ls backend
-          ls frontend
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build service
+        run: npm run build
+
+  frontend-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install frontend dependencies
+        run: npm install
+
+      - name: Build frontend
+        run: npm run build
