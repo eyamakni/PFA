@@ -44,6 +44,14 @@ jobs:
         run: npm run build
         continue-on-error: true
 
+      - name: Run tests
+        run: npm test
+        continue-on-error: true
+
+      - name: Security audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
   frontend-build:
     runs-on: ubuntu-latest
 
@@ -66,4 +74,8 @@ jobs:
 
       - name: Build frontend
         run: npm run build
+        continue-on-error: true
+
+      - name: Security audit frontend
+        run: npm audit --audit-level=high
         continue-on-error: true
