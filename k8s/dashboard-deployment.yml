@@ -2,19 +2,39 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dashboard-service
+
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: dashboard-service
+
   template:
     metadata:
       labels:
         app: dashboard-service
+
     spec:
       containers:
         - name: dashboard-service
           image: maknos/dashboard-service:latest
-          
+
           ports:
             - containerPort: 3010
+
+          env:
+            - name: DB_HOST
+              value: postgres
+
+            - name: DB_PORT
+              value: "5432"
+
+            - name: DB_USERNAME
+              value: root
+
+            - name: DB_PASSWORD
+              value: root
+
+            - name: DB_NAME
+              value: velora_postgres
