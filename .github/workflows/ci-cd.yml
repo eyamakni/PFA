@@ -93,23 +93,26 @@ jobs:
       - name: Verify Prometheus configuration
         run: |
           docker run --rm \
+            --entrypoint promtool \
             -v ${{ github.workspace }}/backend:/etc/prometheus \
             prom/prometheus \
-            promtool check config /etc/prometheus/prometheus.yml
+            check config /etc/prometheus/prometheus.yml
 
       - name: Verify Prometheus alert rules
         run: |
           docker run --rm \
+            --entrypoint promtool \
             -v ${{ github.workspace }}/backend:/etc/prometheus \
             prom/prometheus \
-            promtool check rules /etc/prometheus/alerts.yml
+            check rules /etc/prometheus/alerts.yml
 
       - name: Verify Alertmanager configuration
         run: |
           docker run --rm \
+            --entrypoint amtool \
             -v ${{ github.workspace }}/backend:/etc/alertmanager \
             prom/alertmanager \
-            amtool check-config /etc/alertmanager/alertmanager.yml
+            check-config /etc/alertmanager/alertmanager.yml
 
   docker-build:
     runs-on: ubuntu-latest
