@@ -80,11 +80,41 @@ jobs:
         run: npm audit --audit-level=high || true
         continue-on-error: true
 
-  docker-build:
+  verify-monitoring:
     runs-on: ubuntu-latest
     needs:
       - backend-build
       - frontend-build
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Verify Prometheus configuration
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/backend:/etc/prometheus \
+            prom/prometheus \
+            promtool check config /etc/prometheus/prometheus.yml
+
+      - name: Verify Prometheus alert rules
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/backend:/etc/prometheus \
+            prom/prometheus \
+            promtool check rules /etc/prometheus/alerts.yml
+
+      - name: Verify Alertmanager configuration
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/backend:/etc/alertmanager \
+            prom/alertmanager \
+            amtool check-config /etc/alertmanager/alertmanager.yml
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs:
+      - verify-monitoring
 
     steps:
       - name: Checkout source code
