@@ -26,6 +26,16 @@ export class UsersController {
   create(@Body() body: CreateUserDto) {
     return this.usersService.create(body);
   }
+    @Get('stress')
+  stressCPU() {
+    let result = 0;
+
+    for (let i = 0; i < 1e9; i++) {
+      result += i;
+    }
+
+    return { message: 'CPU stress test completed' };
+  }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN')
